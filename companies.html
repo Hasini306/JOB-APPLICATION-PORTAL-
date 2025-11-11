@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Companies Hiring</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('https://png.pngtree.com/back_origin_pic/03/65/18/a8afc1fe0e119f28e642c109f6c719ab.jpg');
+        background-size: cover;
+        background-position: center;
+        margin: 0;
+        padding: 20px;
+        color: black;
+    }
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        border-radius: 8px;
+    }
+    .top-company-heading {
+        text-align: center;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    .top-company-sub-heading {
+        text-align: center;
+        color: #777;
+        margin-bottom: 20px;
+    }
+    .company-list {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin: 10px 0;
+        padding: 15px;
+        background-color: #fafafa;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        transition: background-color 0.3s;
+    }
+    .company-list:hover {
+        background-color: #f0f0f0;
+    }
+    .company-image img {
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+    }
+    .company-name {
+        font-size: 1.2em;
+        color: #007BFF;
+        margin: 0;
+    }
+    .company-rating {
+        color: #FFD700;
+    }
+    .company-address, .company-opening {
+        color: #555;
+        margin-top: 5px;
+        font-size: 0.9em;
+    }
+    .know-more-btn {
+        margin-top: 10px;
+        background-color: green;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .know-more-btn:hover {
+        background-color: blue;
+    }
+    .back-btn {
+        margin-top: 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+    .company-details {
+        display: none;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #eef;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2 class="top-company-heading">Top Company Hiring</h2>
+    <p class="top-company-sub-heading">List of Top Company Hiring With Us</p>
+
+    <div id="company-container"></div>
+</div>
+
+<script>
+const companies = [
+    {name:"Google",rating:"★★★★★",address:"Mountain View, USA",openings:"25 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",description:"Google LLC is a multinational technology company specializing in Internet services and products.",highestPackage:"$300,000",lowestPackage:"$100,000",topCollege:"IIT Bombay"},
+    {name:"Microsoft",rating:"★★★★★",address:"Redmond, USA",openings:"30 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",description:"Microsoft develops, licenses, and supports software, services, devices, and solutions worldwide.",highestPackage:"$250,000",lowestPackage:"$90,000",topCollege:"IIT Delhi"},
+    {name:"IBM",rating:"★★★★☆",address:"Armonk, USA",openings:"18 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",description:"IBM produces and sells computer hardware, middleware, and software, and provides hosting and consulting services.",highestPackage:"$200,000",lowestPackage:"$80,000",topCollege:"IIT Madras"},
+    {name:"Amazon",rating:"★★★★★",address:"Seattle, USA",openings:"40 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",description:"Amazon is a multinational technology company focusing on e-commerce, cloud computing, and AI.",highestPackage:"$280,000",lowestPackage:"$95,000",topCollege:"IIT Kharagpur"},
+    {name:"Apple",rating:"★★★★★",address:"Cupertino, USA",openings:"15 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",description:"Apple Inc. is an American multinational technology company that designs, develops, and sells electronics and software.",highestPackage:"$310,000",lowestPackage:"$120,000",topCollege:"IIT Kanpur"},
+    {name:"Intel",rating:"★★★★☆",address:"Santa Clara, USA",openings:"22 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/c/c9/Intel-logo.svg",description:"Intel Corporation is a leading semiconductor manufacturer, known for its processors and innovations.",highestPackage:"$210,000",lowestPackage:"$85,000",topCollege:"BITS Pilani"},
+    {name:"Meta",rating:"★★★★★",address:"Menlo Park, USA",openings:"28 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/0/05/Meta_Platforms_Inc._logo.svg",description:"Meta Platforms owns Facebook, Instagram, and WhatsApp, specializing in social media and VR.",highestPackage:"$290,000",lowestPackage:"$110,000",topCollege:"IIT Roorkee"},
+    {name:"Tesla",rating:"★★★★☆",address:"Palo Alto, USA",openings:"12 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg",description:"Tesla designs and manufactures electric vehicles and clean energy solutions.",highestPackage:"$270,000",lowestPackage:"$100,000",topCollege:"IIT Hyderabad"},
+    {name:"Adobe",rating:"★★★★☆",address:"San Jose, USA",openings:"20 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/a/ab/Adobe_Corporate_Logo.png",description:"Adobe is a global leader in digital media and digital marketing solutions.",highestPackage:"$240,000",lowestPackage:"$95,000",topCollege:"NIT Trichy"},
+    {name:"Oracle",rating:"★★★☆☆",address:"Austin, USA",openings:"25 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",description:"Oracle Corporation sells database software, cloud solutions, and enterprise software products.",highestPackage:"$220,000",lowestPackage:"$85,000",topCollege:"VIT Vellore"},
+    {name:"Cisco",rating:"★★★★☆",address:"San Jose, USA",openings:"18 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/6/64/Cisco_logo.svg",description:"Cisco designs and sells networking, security, and communications products and services.",highestPackage:"$200,000",lowestPackage:"$90,000",topCollege:"IIT Guwahati"},
+    {name:"Salesforce",rating:"★★★★☆",address:"San Francisco, USA",openings:"14 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg",description:"Salesforce is a cloud-based software company specializing in CRM services.",highestPackage:"$230,000",lowestPackage:"$100,000",topCollege:"IIT BHU"},
+    {name:"Wipro",rating:"★★★☆☆",address:"Bangalore, India",openings:"35 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/8/80/Wipro_Primary_Logo_Color_RGB.svg",description:"Wipro is a multinational corporation providing IT, consulting, and business process services.",highestPackage:"₹40 LPA",lowestPackage:"₹6 LPA",topCollege:"RVCE Bangalore"},
+    {name:"Infosys",rating:"★★★☆☆",address:"Bangalore, India",openings:"42 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/4/4f/Infosys_logo.svg",description:"Infosys provides IT consulting and software services including e-business and business transformation.",highestPackage:"₹45 LPA",lowestPackage:"₹5 LPA",topCollege:"PES University"},
+    {name:"Accenture",rating:"★★★★☆",address:"Dublin, Ireland",openings:"38 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/9/99/Accenture.svg",description:"Accenture is a multinational company that provides consulting and professional services.",highestPackage:"₹50 LPA",lowestPackage:"₹6.5 LPA",topCollege:"SRM University"},
+    {name:"TCS",rating:"★★★☆☆",address:"Mumbai, India",openings:"50 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Tata_Consultancy_Services_Logo.svg",description:"Tata Consultancy Services is a global leader in IT services, consulting, and business solutions.",highestPackage:"₹35 LPA",lowestPackage:"₹5 LPA",topCollege:"Amrita Vishwa Vidyapeetham"},
+    {name:"Capgemini",rating:"★★★☆☆",address:"Paris, France",openings:"27 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/9/99/Capgemini_201x_logo.svg",description:"Capgemini is a multinational corporation providing consulting, technology, and outsourcing services.",highestPackage:"₹28 LPA",lowestPackage:"₹4.5 LPA",topCollege:"Manipal University"},
+    {name:"HCL Technologies",rating:"★★★☆☆",address:"Noida, India",openings:"33 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/2/23/HCL_Technologies_Logo.svg",description:"HCL Technologies is an Indian multinational IT services and consulting company.",highestPackage:"₹40 LPA",lowestPackage:"₹5 LPA",topCollege:"Chandigarh University"},
+    {name:"Samsung",rating:"★★★★☆",address:"Seoul, South Korea",openings:"19 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg",description:"Samsung Electronics is a global leader in consumer electronics, semiconductors, and digital media.",highestPackage:"$200,000",lowestPackage:"$80,000",topCollege:"IIT Bombay"},
+    {name:"Dell",rating:"★★★★☆",address:"Round Rock, USA",openings:"21 Job Openings",logo:"https://upload.wikimedia.org/wikipedia/commons/4/48/Dell_Logo.svg",description:"Dell Technologies develops, sells, repairs, and supports computers and related products and services.",highestPackage:"$190,000",lowestPackage:"$75,000",topCollege:"NIT Surathkal"}
+];
+
+const container = document.getElementById("company-container");
+
+companies.forEach(company => {
+    container.innerHTML += `
+    <div class="company-list">
+        <div class="company-image"><img src="${company.logo}" alt="${company.name}"></div>
+        <h4 class="company-name">${company.name}</h4>
+        <p class="company-rating">${company.rating}</p>
+        <p class="company-address">${company.address}</p>
+        <p class="company-opening">${company.openings}</p>
+        <button class="know-more-btn" onclick="showDetails(this)">Know More</button>
+        <div class="company-details">
+            <p><strong>Description:</strong> ${company.description}</p>
+            <p><strong>Highest Package:</strong> ${company.highestPackage}</p>
+            <p><strong>Lowest Package:</strong> ${company.lowestPackage}</p>
+            <p><strong>Top College for Placement:</strong> ${company.topCollege}</p>
+            <button class="back-btn" onclick="hideDetails(this)">Back</button>
+        </div>
+    </div>
+    `;
+});
+
+function showDetails(button) {
+    const details = button.nextElementSibling;
+    details.style.display = "block";
+}
+
+function hideDetails(button) {
+    const details = button.parentElement;
+    details.style.display = "none";
+}
+</script>
+  <script src="assets/js/main.js"></script>\n</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Job Portal Login</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif}
+    .first-page{
+      background-image:url('https://cdn.wallpapersafari.com/51/27/78VlbA.jpg');
+      min-height:100vh;
+      background-size:cover;
+      background-position:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .heading{
+      color: #fff;
+      font-size: clamp(28px,6vw,60px);
+      text-align:center;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    /* Modal backdrop - uses flex to center content */
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.55);
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:1000;
+    }
+    .modal.open{ display:flex }
+
+    /* Modal box */
+    .modal-content{
+      width:100%;
+      max-width:560px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.25);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .imgcontainer{
+      background:#f7f7f7;
+      text-align:center;
+      padding:36px 20px 14px;
+      position:relative;
+    }
+    .avatar{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      object-fit:cover;
+      margin-top:-60px;
+      border:6px solid #fff;
+      background:#eee;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .container{ padding:18px 22px 24px; }
+    label{ display:block; font-weight:700; margin:10px 0 6px; color:#333; }
+    input[type=text], input[type=password]{
+      width:100%;
+      padding:12px 14px;
+      border:1px solid #ddd;
+      border-radius:8px;
+      font-size:15px;
+    }
+
+    button.primary{
+      margin-top:12px;
+      background:#04AA6D;
+      color:#fff;
+      border:none;
+      width:100%;
+      padding:12px;
+      border-radius:8px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    button.primary:hover{ opacity:0.95 }
+
+    .footer{
+      background:#f1f1f1;
+      padding:12px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .cancelbtn{
+      background:#f44336;
+      color:#fff;
+      border:none;
+      padding:8px 12px;
+      border-radius:6px;
+      cursor:pointer;
+    }
+    .psw a{ text-decoration:none; color:#333 }
+
+    @media (max-width:480px){
+      .avatar{ width:90px; height:90px; margin-top:-45px; }
+      .modal-content{ max-width: 95%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="first-page">
+    <!-- changed from href="#loginModal" to a normal <a> with id to prevent scrolling -->
+    <a id="openLogin" class="heading">Job Portal Login</a>
+  </div>
+
+  <div id="loginModal" class="modal" aria-hidden="true">
+    <form class="modal-content" onsubmit="event.preventDefault(); loginUser();">
+      <div class="imgcontainer">
+        <!-- avatar -->
+        <img class="avatar" src="https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png" alt="avatar">
+      </div>
+
+      <div class="container">
+        <label for="uname">Username</label>
+        <input id="uname" type="text" placeholder="Enter Username" required>
+
+        <label for="psw">Password</label>
+        <input id="psw" type="password" placeholder="Enter Password" required>
+
+        <button class="primary" type="submit">Login</button>
+
+        <label style="display:inline-flex;align-items:center;margin-top:10px">
+          <input type="checkbox" checked style="margin-right:8px"> Remember me
+        </label>
+      </div>
+
+      <div class="footer">
+        <button type="button" id="closeModal" class="cancelbtn">Cancel</button>
+        <div class="psw"><a href="#" onclick="alert('Password reset flow placeholder');return false;">Forgot password?</a></div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // open/close without jumping the page
+    const openLogin = document.getElementById('openLogin');
+    const modal = document.getElementById('loginModal');
+    const closeModal = document.getElementById('closeModal');
+
+    openLogin.addEventListener('click', e => {
+      e.preventDefault();
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    });
+
+    // close when clicking backdrop
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // login + validation + redirect (passes username as ?user=... to home)
+    function loginUser() {
+      const username = document.getElementById('uname').value.trim();
+      const password = document.getElementById('psw').value;
+
+      const capitalLetter = /[A-Z]/;
+      const specialChar = /[!@#\$%\^&\*\(\),\.\?":\{\}\|<>]/;
+
+      if (!capitalLetter.test(password)) {
+        alert('Password must contain at least one capital letter.');
+        return;
+      }
+      if (password.length < 8) {
+        alert('Password must be at least 8 characters long.');
+        return;
+      }
+      if (!specialChar.test(password)) {
+        alert('Password must contain at least one special character.');
+        return;
+      }
+
+      // success -> redirect to home (username passed in query param)
+      window.location.href = 'home.html?user=' + encodeURIComponent(username);
+    }
+  </script>
+  <script src="assets/js/main.js"></script>\n</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #f78ca0, #9153f4);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 12px;
+        width: 350px;
+        text-align: center;
+        color: white;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+        font-size: 28px;
+    }
+
+    p {
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    label {
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    textarea {
+        resize: none;
+        height: 70px;
+    }
+
+    button {
+        background-color: white;
+        color: #333;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #ddd;
+    }
+
+    .contact-info {
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    #success-message {
+        display: none;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="contact-container">
+    <h1>Get in Touch</h1>
+    <p>Have a Question or Comment? We'd like to hear from you!</p>
+    
+    <form id="contactForm">
+        <label>Name:</label>
+        <input type="text" id="name" required>
+
+        <label>Email:</label>
+        <input type="email" id="email" required>
+
+        <label>Contact:</label>
+        <input type="text" id="contact" required>
+
+        <label>Message:</label>
+        <textarea id="message" required></textarea>
+
+        <button type="submit">Send</button>
+    </form>
+
+    <div id="success-message">✅ Your message has been sent successfully!</div>
+
+    <div class="contact-info">
+        jobhubportal@gmail.com<br>
+        9898908973
+    </div>
+</div>
+
+<script>
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Stop page reload
+
+        // Get input values
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let contact = document.getElementById("contact").value.trim();
+        let message = document.getElementById("message").value.trim();
+
+        // Validation
+        if (name && email && contact && message) {
+            document.getElementById("contactForm").style.display = "none"; // Hide the form
+            document.getElementById("success-message").style.display = "block"; // Show success message
+        } else {
+            alert("Please fill all the fields.");
+        }
+    });
+</script>
+
+  <script src="assets/js/main.js"></script>\n</body>
+</html>
